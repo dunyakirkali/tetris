@@ -4,6 +4,8 @@ STEP
 - ~~Pieces~~
   - Factory Pattern
 - ~~Movement~~
+  - ~~Gravity~~
+  - Rotation
 - Limits
 - Completed rows
 - Score
