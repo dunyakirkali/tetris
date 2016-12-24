@@ -1,5 +1,9 @@
 require 'ruby2d'
 
+require_relative 'object_factory'
+Dir["shapes/*.rb"].each { |file| require_relative file }
+
+GRAVITY = 2
 ROWS = 20
 COLS = 10
 PIXEL_SIZE = 20
@@ -8,58 +12,17 @@ HEIGHT = ROWS * PIXEL_SIZE
 
 set width: WIDTH, height: HEIGHT, title: "Tetris", fps: 30
 
-pos_x = 4
-pos_y = 4
+shapes = [
+  Box.new(4, 4),
+  Long.new(7, 4),
+  LRight.new(2, 1),
+  LLeft.new(9, 2),
+  SRight.new(1, 14),
+  SLeft.new(5, 12)
+]
 
-# Square
-Square.new(pos_x * PIXEL_SIZE, pos_y * PIXEL_SIZE, PIXEL_SIZE, 'red')
-Square.new(pos_x * PIXEL_SIZE, (pos_y + 1) * PIXEL_SIZE, PIXEL_SIZE, 'red')
-Square.new((pos_x + 1) * PIXEL_SIZE, pos_y * PIXEL_SIZE, PIXEL_SIZE, 'red')
-Square.new((pos_x + 1) * PIXEL_SIZE, (pos_y + 1) * PIXEL_SIZE, PIXEL_SIZE, 'red')
-
-pos_x = 7
-pos_y = 4
-
-# Long
-Square.new(pos_x * PIXEL_SIZE, pos_y * PIXEL_SIZE, PIXEL_SIZE, 'blue')
-Square.new(pos_x * PIXEL_SIZE, (pos_y + 1) * PIXEL_SIZE, PIXEL_SIZE, 'blue')
-Square.new(pos_x * PIXEL_SIZE, (pos_y + 2) * PIXEL_SIZE, PIXEL_SIZE, 'blue')
-Square.new(pos_x * PIXEL_SIZE, (pos_y + 3) * PIXEL_SIZE, PIXEL_SIZE, 'blue')
-
-pos_x = 2
-pos_y = 1
-
-# L Right
-Square.new(pos_x * PIXEL_SIZE, pos_y * PIXEL_SIZE, PIXEL_SIZE, 'green')
-Square.new(pos_x * PIXEL_SIZE, (pos_y + 1) * PIXEL_SIZE, PIXEL_SIZE, 'green')
-Square.new(pos_x * PIXEL_SIZE, (pos_y + 2) * PIXEL_SIZE, PIXEL_SIZE, 'green')
-Square.new((pos_x + 1) * PIXEL_SIZE, (pos_y + 2) * PIXEL_SIZE, PIXEL_SIZE, 'green')
-
-pos_x = 9
-pos_y = 2
-
-# L Left
-Square.new(pos_x * PIXEL_SIZE, pos_y * PIXEL_SIZE, PIXEL_SIZE, 'navy')
-Square.new(pos_x * PIXEL_SIZE, (pos_y + 1) * PIXEL_SIZE, PIXEL_SIZE, 'navy')
-Square.new(pos_x * PIXEL_SIZE, (pos_y + 2) * PIXEL_SIZE, PIXEL_SIZE, 'navy')
-Square.new((pos_x - 1) * PIXEL_SIZE, (pos_y + 2) * PIXEL_SIZE, PIXEL_SIZE, 'navy')
-
-pos_x = 1
-pos_y = 15
-
-# S Right
-Square.new(pos_x * PIXEL_SIZE, pos_y * PIXEL_SIZE, PIXEL_SIZE, 'green')
-Square.new(pos_x * PIXEL_SIZE, (pos_y + 1) * PIXEL_SIZE, PIXEL_SIZE, 'green')
-Square.new((pos_x + 1) * PIXEL_SIZE, (pos_y + 1) * PIXEL_SIZE, PIXEL_SIZE, 'green')
-Square.new((pos_x + 1) * PIXEL_SIZE, (pos_y + 2) * PIXEL_SIZE, PIXEL_SIZE, 'green')
-
-pos_x = 5
-pos_y = 12
-
-# S Left
-Square.new(pos_x * PIXEL_SIZE, pos_y * PIXEL_SIZE, PIXEL_SIZE, 'navy')
-Square.new(pos_x * PIXEL_SIZE, (pos_y + 1) * PIXEL_SIZE, PIXEL_SIZE, 'navy')
-Square.new((pos_x - 1) * PIXEL_SIZE, (pos_y + 1) * PIXEL_SIZE, PIXEL_SIZE, 'navy')
-Square.new((pos_x - 1) * PIXEL_SIZE, (pos_y + 2) * PIXEL_SIZE, PIXEL_SIZE, 'navy')
+update do
+  shapes.each(&:update)
+end
 
 show
