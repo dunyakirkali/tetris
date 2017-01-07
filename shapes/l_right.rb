@@ -1,4 +1,6 @@
-class LRight
+require_relative '../shape'
+
+class LRight < Shape
   attr_reader :shapes
 
   def initialize(x, y)
@@ -10,9 +12,6 @@ class LRight
     ]
   end
 
-  def update
-    @shapes.each do |shape|
-      shape.y += GRAVITY
-    end
+  def rotate
   end
 end

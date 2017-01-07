@@ -1,28 +1,56 @@
 require 'ruby2d'
 
 require_relative 'object_factory'
+require_relative 'world'
+require_relative 'score'
+require_relative 'point'
+
 Dir["shapes/*.rb"].each { |file| require_relative file }
 
-GRAVITY = 2
+PIXEL_SIZE = 30
+GRAVITY = 10
 ROWS = 20
 COLS = 10
-PIXEL_SIZE = 20
 WIDTH = COLS * PIXEL_SIZE
 HEIGHT = ROWS * PIXEL_SIZE
+N = 4
+WORLD = World.new
+SCORE = Score.new
 
 set width: WIDTH, height: HEIGHT, title: "Tetris", fps: 30
 
-shapes = [
-  Box.new(4, 4),
-  Long.new(7, 4),
-  LRight.new(2, 1),
-  LLeft.new(9, 2),
-  SRight.new(1, 14),
-  SLeft.new(5, 12)
-]
+shapes = []
+
+on key: 'r' do
+  unless shapes.last.nil?
+    shapes.last.rotate
+  end
+end
+
+on key: 'a' do
+  unless shapes.last.nil?
+    shapes.last.move_left
+  end
+end
+
+on key: 'd' do
+  unless shapes.last.nil?
+    shapes.last.move_right
+  end
+end
 
 update do
-  shapes.each(&:update)
+  SCORE.text.text = WORLD.height
+  if WORLD.height < ROWS
+    shapes << ObjectFactory.generate if shapes.map(&:bottom?).all? || shapes.empty?
+    shapes.map(&:update)
+    if shapes.last.bottom?
+      WORLD.freeze(shapes.last.points)
+      shapes.delete(shapes.last)
+    end
+  else
+    puts 'DEAD'
+  end
 end
 
 show
