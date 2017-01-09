@@ -1,6 +1,7 @@
-class World
+class World < Gosu::Window
   def initialize
     @grid = Hash.new
+    @color = 0xffffffff
     for i in 0..COLS
       for j in 0..ROWS
         @grid[[i, j]] = false
@@ -14,7 +15,6 @@ class World
 
   def freeze(points)
     points.each do |point|
-      Square.new(point.x * PIXEL_SIZE, point.y * PIXEL_SIZE, PIXEL_SIZE, 'white')
       @grid[[point.x, point.y]] = true
     end
   end
@@ -30,5 +30,20 @@ class World
       next unless row.any?
     end
     count
+  end
+
+  def draw
+    for i in 0..COLS
+      for j in 0..ROWS
+        if @grid[[i, j]]
+          draw_quad(
+            i * PIXEL_SIZE, j * PIXEL_SIZE, @color,
+            (i + 1) * PIXEL_SIZE, j * PIXEL_SIZE, @color,
+            i * PIXEL_SIZE, (j - 1) * PIXEL_SIZE, @color,
+            (i + 1) * PIXEL_SIZE, (j - 1) * PIXEL_SIZE, @color, 0
+          )
+        end
+      end
+    end
   end
 end

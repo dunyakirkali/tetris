@@ -1,9 +1,12 @@
 class Score
-  attr_accessor :text
+  attr_accessor :value
 
   def initialize
-    @text = Text.new(0, 0, 50, '0', 'Arial', 'red')
-    @text.color = "blue"
-    @text.text = "blue"
+    @font = Gosu::Font.new(50)
+    @value = 0
+  end
+
+  def draw
+    @font.draw(@value.to_s, 10, 10, 0, 1.0, 1.0, 0xff_ffffff)
   end
 end
