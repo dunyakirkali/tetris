@@ -9,8 +9,14 @@ class World < Gosu::Window
     end
   end
 
+  @@instance = World.new
+
+  def self.instance
+    return @@instance
+  end
+
   def check(points)
-    !points.map { |point| @grid[[point.x, point.y]] }.any? && points.map { |point| point.y < ROWS }.all?
+    !points.map { |point| @grid[[point.x, point.y]] }.any? && points.map { |point| point.y <= ROWS }.all?
   end
 
   def freeze(points)

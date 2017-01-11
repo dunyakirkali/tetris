@@ -1,6 +1,9 @@
 class Shape < Gosu::Window
   attr_accessor :points
 
+  ############
+  # 2 Factory Pattern
+  ############
   def self.generate
     case rand(6)
     when 0
@@ -17,8 +20,12 @@ class Shape < Gosu::Window
       SRight.new(rand(COLS - 1), 0)
     end
   end
+  ############
 
   def draw
+    ############
+    # 3 Iterator Pattern
+    ############
     @points.each do |point|
       draw_quad(
         point.x * PIXEL_SIZE, point.y * PIXEL_SIZE, @color,
@@ -27,6 +34,7 @@ class Shape < Gosu::Window
         (point.x + 1) * PIXEL_SIZE, (point.y - 1) * PIXEL_SIZE, @color, 0
       )
     end
+    ############
   end
 
   def update
@@ -35,7 +43,7 @@ class Shape < Gosu::Window
   end
 
   def bottom?
-    !WORLD.check(@points.map { |point| Point.new(point.x, point.y + 1) })
+    !World.instance.check(@points.map { |point| Point.new(point.x, point.y + 1) })
   end
 
   def move_left

@@ -1,3 +1,4 @@
+require_relative 'world'
 require_relative 'score'
 require_relative 'shape'
 Dir["shapes/*.rb"].each { |file| require_relative file }
@@ -6,7 +7,9 @@ class Window < Gosu::Window
   def initialize(width, height)
     super(width, height, false, 100)
     self.caption = "Tetris"
-    @score = Score.new
+    ############
+    @score = Score.new # 1
+    ############
     @shapes = []
   end
 
@@ -16,17 +19,18 @@ class Window < Gosu::Window
       @shapes.last.move_left
     when 7
       @shapes.last.move_right
-    when 21
-      puts 'rotate'
     end
   end
 
   def update
-    @score.value = WORLD.height
-    if WORLD.height < ROWS
+    ############
+    @score.value = World.instance.height # 1
+    # Score.instance.value = World.instance.height # 1
+    ############
+    if World.instance.height < ROWS
       @shapes << Shape.generate if @shapes.map(&:bottom?).all? || @shapes.empty?
       @shapes.map(&:update)
-      WORLD.freeze(@shapes.last.points) if @shapes.last.bottom?
+      World.instance.freeze(@shapes.last.points) if @shapes.last.bottom?
     else
       puts 'DEAD'
     end
@@ -34,7 +38,10 @@ class Window < Gosu::Window
 
   def draw
     @score.draw
+    ############
+    # Score.instance.draw # 1
+    ############
     @shapes.map(&:draw)
-    WORLD.draw
+    World.instance.draw
   end
 end
