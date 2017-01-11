@@ -7,8 +7,8 @@ class Window < Gosu::Window
   def initialize(width, height)
     super(width, height, false, 100)
     self.caption = "Tetris"
-    ############
-    @score = Score.new # 1
+    ############ 1
+    @score = Score.new
     ############
     @shapes = []
   end
@@ -23,9 +23,8 @@ class Window < Gosu::Window
   end
 
   def update
-    ############
-    @score.value = World.instance.height # 1
-    # Score.instance.value = World.instance.height # 1
+    ############ 1
+    @score.value = World.instance.height
     ############
     if World.instance.height < ROWS
       @shapes << Shape.generate if @shapes.map(&:bottom?).all? || @shapes.empty?
@@ -37,9 +36,8 @@ class Window < Gosu::Window
   end
 
   def draw
+    ############ 1
     @score.draw
-    ############
-    # Score.instance.draw # 1
     ############
     @shapes.map(&:draw)
     World.instance.draw

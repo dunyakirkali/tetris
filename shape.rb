@@ -1,9 +1,7 @@
 class Shape < Gosu::Window
   attr_accessor :points
 
-  ############
-  # 2 Factory Pattern
-  ############
+  ############ 2
   def self.generate
     case rand(6)
     when 0
@@ -23,9 +21,7 @@ class Shape < Gosu::Window
   ############
 
   def draw
-    ############
-    # 3 Iterator Pattern
-    ############
+    ############ 3
     @points.each do |point|
       draw_quad(
         point.x * PIXEL_SIZE, point.y * PIXEL_SIZE, @color,

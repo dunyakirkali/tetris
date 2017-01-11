@@ -10,12 +10,11 @@ class Score
     @font.draw(@value.to_s, 10, 10, 0, 1.0, 1.0, 0xff_ffffff)
   end
 
-  ############
-  # 1 Singleton Pattern
-  ############
+  ############ 1
   # @@instance = Score.new
   #
   # def self.instance
   #   return @@instance
   # end
+  ############
 end
